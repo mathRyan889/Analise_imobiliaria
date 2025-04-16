@@ -1,123 +1,37 @@
 # Analise_imobiliaria
-📊 Análise de Dados de Aluguel com Python e Pandas
-Este projeto tem como objetivo realizar uma análise exploratória sobre um conjunto de dados referente a imóveis para aluguel. Utilizamos a biblioteca Pandas para carregar, transformar e visualizar as informações, além de fazer limpezas e agrupamentos estratégicos para compreensão do mercado.
+📊 Análise de Dados de Aluguel
+Este projeto tem como objetivo explorar e entender melhor um conjunto de dados de imóveis para aluguel utilizando a biblioteca Pandas. A ideia é limpar os dados, fazer algumas análises básicas e visualizar informações importantes sobre o mercado de aluguel.
 
-📁 Arquivo utilizado
-aluguel.csv: arquivo com os dados brutos contendo informações sobre os imóveis.
+🔍 O que foi feito
+Leitura do arquivo de dados: carregamos um arquivo .csv com informações de imóveis disponíveis para aluguel.
 
-🧰 Bibliotecas utilizadas
-python
-Copy
-Edit
-import pandas as pd
-🔍 Leitura e primeiros insights
-📥 Leitura dos dados
-python
-Copy
-Edit
-pd.read_csv("aluguel.csv", sep=';')
-O separador utilizado no CSV é ;, comum em dados formatados para padrões brasileiros.
+Visualização inicial: analisamos as primeiras e últimas linhas para entender a estrutura da base de dados.
 
-👀 Visualização inicial
-python
-Copy
-Edit
-dados.head(10)   # Primeiras 10 linhas  
-dados.tail(10)   # Últimas 10 linhas  
-📌 Informações básicas
-python
-Copy
-Edit
-dados.shape       # (linhas, colunas)
-dados.columns     # Nomes das colunas
-dados.info()      # Tipos de dados e não nulos
-🎯 Seleção de colunas específicas
-python
-Copy
-Edit
-dados['Tipo']                      # Uma coluna
-dados[['Quartos','Valor']]        # Múltiplas colunas
-📊 Análise exploratória
-💰 Valor médio de aluguel por tipo de imóvel
-python
-Copy
-Edit
-dados.groupby('Tipo')['Valor'].mean()
-📈 Visualização dos dados
-python
-Copy
-Edit
-df_preco_tipo = dados.groupby('Tipo')[['Valor']].mean().sort_values('Valor')
-df_preco_tipo.plot(kind='barh', figsize=(14,10), color='purple')
-Algumas categorias apresentaram valores discrepantes por serem comerciais, e isso pode interferir em modelos futuros de machine learning. Por isso, decidimos separar imóveis comerciais dos residenciais.
+Análise geral: identificamos quantas linhas e colunas existem, quais são os nomes das colunas e que tipo de informação cada uma traz.
 
-🧹 Limpeza dos dados
-🏢 Imóveis comerciais a remover:
-python
-Copy
-Edit
-imoveis_comerciais = ['Conjunto Comercial/Sala', 'Prédio Inteiro', 'Loja/Salão',
-                      'Galpão/Depósito/Armazém', 'Casa Comercial', 'Terreno Padrão',
-                      'Loja Shopping/ Ct Comercial', 'Box/Garagem', 'Chácara',
-                      'Loteamento/Condomínio', 'Sítio', 'Pousada/Chalé', 'Hotel', 'Indústria']
-📤 Removendo do DataFrame
-python
-Copy
-Edit
-df = dados.query('@imoveis_comerciais not in Tipo')
-🔁 Repetindo o gráfico com os dados limpos
-python
-Copy
-Edit
-df_preco_tipo = df.groupby('Tipo')[['Valor']].mean().sort_values('Valor')
-df_preco_tipo.plot(kind='barh', figsize=(14,10), color='purple',
-                   xlabel='Valores', ylabel='Tipos de imóvel')
-📉 Distribuição percentual por tipo
-python
-Copy
-Edit
-df.Tipo.value_counts(normalize=True).to_frame().sort_values('Tipo')
-python
-Copy
-Edit
-df_percentual_tipo = df.Tipo.value_counts(normalize=True).to_frame().sort_values('Tipo')
-df_percentual_tipo.plot(kind='bar', figsize=(14,10), color='green',
-                        xlabel='Tipos', ylabel='Percentual')
-Observamos que apartamentos representam cerca de 80% da base. Por isso, decidimos manter apenas eles para análises futuras.
+Seleção de dados: extraímos colunas específicas como tipo de imóvel, número de quartos e valor do aluguel para fazer análises mais focadas.
 
-🏠 Foco: Apartamentos
-python
-Copy
-Edit
-df_apartamento = df.query('Tipo == "Apartamento"')
-✅ Conclusão
-Neste projeto:
+Cálculo de médias: descobrimos qual o valor médio do aluguel por tipo de imóvel.
 
-Fizemos uma análise inicial dos dados de aluguel;
+Visualização com gráficos: criamos gráficos de barras para visualizar melhor os dados, como a média de preço por tipo de imóvel.
 
-Identificamos distorções causadas por imóveis comerciais;
+🧹 Limpeza de dados
+Durante a análise, percebemos que alguns tipos de imóveis (como salas comerciais, galpões, hotéis etc.) tinham valores muito altos e acabavam distorcendo os resultados. Por isso, removemos esses imóveis da base para focar apenas em residências.
 
-Limpamos os dados para focar em imóveis residenciais;
+📈 Foco em apartamentos
+Após a limpeza, percebemos que a maioria dos imóveis da base são apartamentos — cerca de 80%. Então, decidimos focar só neles para deixar a análise mais consistente e alinhada com futuros projetos, como modelos de machine learning.
 
-Visualizamos distribuições e agrupamos por tipo de imóvel;
+🎯 Próximos passos
+Explorar mais visualizações;
 
-Isolamos os apartamentos para aprofundar as análises.
+Criar modelos que prevejam o valor do aluguel com base nas características do imóvel;
 
-Este dataset agora está pronto para uso em modelos de machine learning, análises preditivas ou dashboards interativos.
+Usar ferramentas como Streamlit para criar dashboards interativos.
 
-🚀 Futuras implementações
-Visualização com matplotlib ou seaborn;
+📁 Requisitos
+Ter o Python instalado;
 
-Análise geográfica (se houver dados de localização);
-
-Criação de modelos preditivos de preços;
-
-Implementação de dashboards com Plotly Dash ou Streamlit.
-
-📎 Requisitos
-Python 3.7+
-
-Pandas
+Ter a biblioteca Pandas instalada para manipulação de dados.
 
 Instalação das dependências:
 
